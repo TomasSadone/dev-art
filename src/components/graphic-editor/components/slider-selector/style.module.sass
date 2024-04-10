@@ -1,0 +1,35 @@
+@use '../../../../helpers'
+    
+.toggler 
+    width: 30px
+    aspect-ratio: 1
+    border-radius: 6px
+    display: grid
+    place-content: center
+    position: relative
+
+.slider
+    display: flex
+    gap: 16px
+    justify-content: space-between
+    font-size: 16px
+    line-height: 35px
+
+.sliderLabel
+    font-weight: 400
+    padding: 4px
+    border-radius: 6px
+    background: helpers.$g05
+
+
+.sliderContainer 
+    min-width: max-content
+    z-index: 20
+    color: black
+    padding: 8px
+    border-radius: 4px
+    position: absolute
+    left: 50%
+    top: 20px
+    background-color: white
+    transform: translate(-50%)

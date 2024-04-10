@@ -1,0 +1,105 @@
+@use '../../helpers'
+    
+.button
+  display: inline-flex
+  justify-content: center
+  align-items: center
+  padding: 10px 16px
+  border-radius: 8px
+  @include helpers.button-s
+  
+  
+  text-align: center
+  color: helpers.$n1
+  transition: all .2s
+  &.stroke
+    background: helpers.$n
+    border: 1px solid helpers.$g3
+    color: helpers.$n9
+    &:hover
+      background: helpers.$n9
+      color: helpers.$n
+      &:disabled
+        background: transparent
+      
+  &.text
+    background: transparent
+    color: helpers.$g7
+    &:hover
+      background: transparent
+      color: helpers.$n9
+  &:disabled
+    opacity: .5
+    cursor: default
+    pointer-events: none
+
+
+.orange
+  background: helpers.$orange
+  &:hover
+    background: darken(helpers.$orange, 10)
+    &:disabled
+      background: helpers.$orange
+  &.secondary
+    background: helpers.$orange_secondary
+    color: helpers.$orange
+    &:hover
+      background: darken(helpers.$orange_secondary, 10)
+      &:disabled
+        background: helpers.$orange_secondary
+
+.green
+  background: helpers.$green
+  &:hover
+    background: darken(helpers.$green, 10)
+    &:disabled
+      background: helpers.$green
+  &.secondary
+    background: helpers.$green_secondary
+    color: helpers.$green
+    &:hover
+      background: darken(helpers.$green_secondary, 10)
+      &:disabled
+        background: helpers.$green_secondary
+
+.red
+  background: helpers.$red
+  &:hover
+    background: darken(helpers.$red, 10)
+    &:disabled
+      background: helpers.$red
+  &.secondary
+    background: helpers.$red_secondary
+    color: helpers.$red
+    &:hover
+      background: darken(helpers.$red_secondary, 10) 
+      &:disabled
+        background: helpers.$red_secondary
+
+.blue
+  background: helpers.$blue
+  &:hover
+    background: darken(helpers.$blue, 10)
+    &:disabled
+      background: helpers.$blue
+  &.secondary
+    background: helpers.$blue_secondary
+    color: helpers.$blue
+    &:hover
+      background: darken(helpers.$blue_secondary, 10)  
+      &:disabled
+        background: helpers.$blue_secondary
+
+.white
+  background: white
+  color: #344054
+  &:hover
+    background: darken(white, 5)
+    &:disabled
+      background: white
+
+.icon_container
+    margin-right: 8px
+
+.end_icon_container
+    margin-left: 8px

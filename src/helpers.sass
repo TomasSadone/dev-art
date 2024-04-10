@@ -1,0 +1,142 @@
+// media queries
+=w
+    @media only screen and (max-width: "1419px")
+        @content
+=x
+    @media only screen and (max-width: "1339px")
+        @content
+=d
+    @media only screen and (max-width: "1259px")
+        @content
+=t
+    @media only screen and (max-width: "1023px")
+        @content
+=m
+    @media only screen and (max-width: "767px")
+        @content
+=a
+    @media only screen and (max-width: "639px")
+        @content
+=s
+    @media only screen and (max-width: "474px")
+        @content
+
+// fonts
+=Poppins
+    font-family: "Poppins", sans-serif
+
+// colors
+$orange: #ffa563
+$orange_secondary: #FFEBD6
+$orange_secondary_light: #fff5eb
+$green: #00b27a
+$green_secondary: #EBFFF9
+$blue: #6392ff
+$blue_secondary: #D6E5FF
+$blue_secondary_light: #ebf2ff
+$red:#fc6371
+$red_secondary:#FED8DB
+$red_secondary_light:#ffe8ea
+$menu-color:#f6f6f6
+
+$orange_500: #FF9933
+
+$n: #FFFFFF
+$n1: #FCFCFC
+$n2: #F4F4F4
+$n3: #EFEFEF
+$n4: #6F767E
+$n5: #33383F
+$n6: #272B30
+$n7: #1A1D1F
+$n8: #111315
+$n9: #000000
+
+$g05: #F9FAFB
+$g1: #F2F4F7
+$g2: #EAECF0
+$g3: #D0D5DD
+$g4: #98A2B3
+$g5: #667085
+$g6: #475467
+$g7: #344054
+$g8: #1D2939
+
+$primary_25:#F5FFFC
+$primary_50:#EBFFF9
+$primary_100:#D6FFF2
+$primary_200:#B8EDD7
+$primary_500:#00B27A
+$primary_700:#008F62
+$primary_800:#006646
+$success_50:#ECFDF3
+
+$error_100: #FEE4E2
+$error_200: #FECDCA
+$error_500: #F04438
+
+// typography
+=base-font
+    font-size: 0.8rem
+    font-weight: 600
+    line-height: calc(24/15)
+
+=title1
+    font-size: 16px
+    font-style: normal
+    font-weight: 500
+    line-height: 24px
+    +Poppins
+    
+=title1-s
+    font-size: 1rem
+    font-weight: 600
+    line-height: calc(32/20)
+    letter-spacing: -.02em
+    +m
+        font-size: 0.9rem
+
+=button-s
+    font-size: 0.8rem
+    font-weight: 600
+    line-height: calc(32/20)
+    letter-spacing: -.02em
+
+    
+// scroll-bar
+=smooth-scroll-bar
+  &::-webkit-scrollbar 
+      width: 5px
+      height: 2px
+  &::-webkit-scrollbar-track 
+      background-color: $n3
+      border-radius: 10px
+      +dark
+        background-color: $n6
+  &::-webkit-scrollbar-thumb 
+      background: $orange
+      border-radius: 10px
+  &::-webkit-scrollbar-thumb:hover 
+      background: darken($orange, 10)
+
+=hide-scroll-bar
+  &::-webkit-scrollbar 
+      width: 0
+      height: 0
+
+=placeholder
+    &::placeholder
+        @content
+
+// theme
+=dark
+    @at-root :global(.dark-mode) &
+        @content
+
+=dark-body
+    @at-root .dark-mode
+        @content
+
+=dark-common
+    @at-root .dark-mode &
+        @content

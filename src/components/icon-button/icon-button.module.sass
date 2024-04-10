@@ -1,0 +1,39 @@
+@import ../../helpers
+
+.button
+    cursor: pointer
+    display: flex
+    padding: 8px
+    justify-content: center
+    align-items: center
+    gap: 8px
+    border-radius: 8px
+    background: $n1
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05)
+    &:hover
+        background: $n2
+    &:disabled
+        opacity: .5
+        cursor: default
+        pointer-events: none
+        
+.default
+    border: 1px solid $g3
+    svg
+        fill: $n8
+.red
+    border: 1px solid $red
+
+.green
+    border: 1px solid $green
+
+.blue
+    border: 1px solid $blue
+
+.orange
+    border: 1px solid $orange
+
+
+.loader
+    margin: 8px !important
+    gap: 8px

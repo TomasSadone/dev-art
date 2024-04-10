@@ -1,0 +1,26 @@
+@use '../../../../helpers'
+
+.canvasContainer
+    height: calc( 100% - 30px ) 
+    overflow: auto
+    background-color: inherit
+    min-width: auto
+
+.libraryWrapper
+    position: relative
+    padding: 3rem
+    min-width: min-content
+    display: flex
+    justify-content: center
+    align-items: center
+    height: min-content
+    min-height: 100%
+
+.canvas
+    display: block
+    margin: auto
+    width: 80%
+    height:  80%
+    border-radius: 8px
+    &:hover, &.active
+        outline:  3px solid helpers.$primary_500

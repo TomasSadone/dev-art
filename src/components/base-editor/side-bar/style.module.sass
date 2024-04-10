@@ -1,0 +1,28 @@
+@use '../../../helpers'
+
+.sidebar
+    background-color: white
+    height: 100%
+    overflow: auto
+    > div
+        background-color: helpers.$g1
+
+.button
+    background-color: white 
+    width: 100%
+    display: block
+    padding: 24px
+    display: flex
+    gap: 4px
+    flex-direction: column
+    align-items: center
+    margin-inline: auto
+    color: helpers.$g7
+    font-weight: 500
+    font-size: 16px
+    &.selected
+        background-color: helpers.$g1
+    &.prevSelected
+        border-top-right-radius: 20px
+    &.nextSelected
+        border-bottom-right-radius: 20px

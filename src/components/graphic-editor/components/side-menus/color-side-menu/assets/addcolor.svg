@@ -1,0 +1,22 @@
+<svg width="48" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 1000002144">
+<rect id="Rectangle 41" x="0.5" y="0.5" width="47" height="48" rx="1.5" fill="url(#paint0_linear_31_21329)" stroke="#667085"/>
+<rect id="Rectangle 24" x="6" y="7" width="36" height="36" rx="1.54517" fill="white"/>
+<path id="Vector" d="M23 32V26H17V24H23V18H25V24H31V26H25V32H23Z" fill="#667085"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_31_21329" x1="0" y1="0" x2="48" y2="49" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF0000"/>
+<stop offset="0.114583" stop-color="#FB8519"/>
+<stop offset="0.229167" stop-color="#F6D732"/>
+<stop offset="0.3125" stop-color="#86F344"/>
+<stop offset="0.416667" stop-color="#59EFB9"/>
+<stop offset="0.5" stop-color="#6CBEEC"/>
+<stop offset="0.609375" stop-color="#7E82E9"/>
+<stop offset="0.723958" stop-color="#CB93E5"/>
+<stop offset="0.838542" stop-color="#E82BB3"/>
+<stop offset="0.916667" stop-color="#B626CD"/>
+<stop offset="1" stop-color="#FF001F"/>
+</linearGradient>
+</defs>
+</svg>
