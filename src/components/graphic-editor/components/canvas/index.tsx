@@ -78,9 +78,11 @@ const Canvas = () => {
         const posY = e.clientY;
 
         if (positionThreePointsMenu !== null) {
+            /* @ts-expect-error */
             setPositionThreePointsMenu(null);
             return false;
         }
+        /* @ts-expect-error */
         setPositionThreePointsMenu({ x: posX, y: posY });
         return false;
     };

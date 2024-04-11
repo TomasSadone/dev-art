@@ -28,13 +28,11 @@ fabric.Object.NUM_FRACTION_DIGITS = 8;
 export type Props = {
     onSave: (template: SaveObject) => void;
     onExit: () => void;
-    onOwnUploadDelete?: (image: OwnUpload) => void;
     logos?: string[];
-    myUploads?: OwnUpload[];
 };
 
 export const GraphicEditor = forwardRef(
-    ({ onSave, onExit, logos, myUploads, onOwnUploadDelete }: Props, ref) => {
+    ({ onSave, onExit, logos }: Props, ref) => {
         const canvasInstanceRef = useCanvasContext();
         const [, setSelectedSection] = useAtom(handleSetSelectedSectionAtom);
         const [, setSelectedItemType] = useAtom(handleSetSelectedItemTypeAtom);
@@ -175,11 +173,11 @@ export const GraphicEditor = forwardRef(
                 // Backspace or Delete for delete
                 const activeObject =
                     canvasInstanceRef.current.getActiveObject();
-                if (activeObject) {
-                    console.log(activeObject);
-                    e.preventDefault();
-                    canvasInstanceRef.current.remove(activeObject);
+                if (activeObject.type === 'i-text' && activeObject.isEditing) {
+                    return;
                 }
+                e.preventDefault();
+                canvasInstanceRef.current.remove(activeObject);
             }
         }
 
@@ -192,13 +190,7 @@ export const GraphicEditor = forwardRef(
                     />
                 }
                 Sidebar={<Sidebar />}
-                SidemenuChildren={
-                    <Sidemenu
-                        onOwnUploadDelete={onOwnUploadDelete}
-                        logos={logos}
-                        myUploads={myUploads}
-                    />
-                }
+                SidemenuChildren={<Sidemenu logos={logos} />}
                 ToolsBarChildren={<Toolbar />}
             >
                 <div style={{ height: '100%' }}>

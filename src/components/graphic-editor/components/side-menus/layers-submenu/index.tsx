@@ -71,6 +71,7 @@ export const LayersSubmenu = () => {
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                         >
+                            {/* @ts-expect-error */}
                             {_objects.toReversed().map((object, i) => (
                                 <Draggable
                                     draggableId={String(object.name)}
