@@ -12,11 +12,11 @@ import { Sidemenu } from './components/side-menus';
 import { elementSectionTypes } from './constants/element-section-types';
 import { ExposedMehtods, Resizer } from './components/resizer';
 import {
-  ToolbarsSections,
-  handleSetSelectedItemTypeAtom,
-  handleSetSelectedSectionAtom,
-  handleSetTemplateUploadsAtom,
-  handleSetThreePointsMenuPosition,
+    ToolbarsSections,
+    handleSetSelectedItemTypeAtom,
+    handleSetSelectedSectionAtom,
+    handleSetTemplateUploadsAtom,
+    handleSetThreePointsMenuPosition,
 } from './canvas-context/atoms/atoms';
 import { OwnUpload } from './components/side-menus/uploads-side-menu';
 
@@ -24,177 +24,188 @@ fabric.Object.prototype.transparentCorners = false;
 fabric.Object.prototype.cornerColor = '#00b27a';
 fabric.Object.prototype.cornerStyle = 'circle';
 fabric.Object.NUM_FRACTION_DIGITS = 8;
-if (document) {
-  document.head.innerHTML += `
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Amatic+SC:wght@400;700&family=Arimo:ital,wght@0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Bebas+Neue&family=Caveat+Brush&family=Dancing+Script:wght@400;500;600;700&family=Itim&family=Londrina+Shadow&family=Pacifico&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Signika:wght@300;400;500;600;700&family=Tenor+Sans&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
-    `;
-}
 
 export type Props = {
-  onSave: (template: SaveObject) => void;
-  onExit: () => void;
-  onOwnUploadDelete?: (image: OwnUpload) => void;
-  logos?: string[];
-  myUploads?: OwnUpload[];
+    onSave: (template: SaveObject) => void;
+    onExit: () => void;
+    onOwnUploadDelete?: (image: OwnUpload) => void;
+    logos?: string[];
+    myUploads?: OwnUpload[];
 };
 
 export const GraphicEditor = forwardRef(
-  ({ onSave, onExit, logos, myUploads, onOwnUploadDelete }: Props, ref) => {
-    const canvasInstanceRef = useCanvasContext();
-    const [, setSelectedSection] = useAtom(handleSetSelectedSectionAtom);
-    const [, setSelectedItemType] = useAtom(handleSetSelectedItemTypeAtom);
-    const setSectionAndItemType = (
-      section: Exclude<ToolbarsSections, 'canvas'>
-    ) => {
-      setSelectedSection(section);
-      setSelectedItemType(section);
-    };
-    const [, setPositionThreePointsMenu] = useAtom(
-      handleSetThreePointsMenuPosition
-    );
-    const [, setTemplateUploads] = useAtom(handleSetTemplateUploadsAtom);
-    const resizerRef = useRef<ExposedMehtods | null>(null);
-
-    useImperativeHandle(ref, () => {
-      return {
-        loadFromJSON(loadedCanvas: SaveObject) {
-          if (!canvasInstanceRef.current)
-            throw Error('You must wait for canvas to be initalized');
-
-          const { current: canvas } = canvasInstanceRef;
-
-          canvas.loadFromJSON(loadedCanvas, () => {
-            canvasInstanceRef!.current!.renderAll.bind(canvas);
-            canvas.setWidth(loadedCanvas.width);
-            canvas.setHeight(loadedCanvas.height);
-            resizerRef.current?.setInitialSize({
-              height: loadedCanvas.height,
-              width: loadedCanvas.width,
-            });
-            const templateUploads = loadedCanvas.objects.reduce<string[]>(
-              (arr, obj) => {
-                if (
-                  'type' in obj &&
-                  'src' in obj &&
-                  typeof obj.src === 'string'
-                ) {
-                  if (obj.type === 'image') {
-                    arr.push(obj.src);
-                  }
-                }
-                return arr;
-              },
-              []
-            );
-            setTemplateUploads(templateUploads);
-          });
-        },
-        isCanvasInitialized() {
-          return !!canvasInstanceRef.current;
-        },
-      };
-    });
-
-    useEffect(() => {
-      if (canvasInstanceRef.current) {
-        canvasInstanceRef.current.on('mouse:down', handleMouseDown);
-        canvasInstanceRef.current.on('selection:cleared', handleSectionCleared);
-        canvasInstanceRef.current.on('selection:created', handleSelection);
-        canvasInstanceRef.current.on('selection:updated', handleSelection);
-        canvasInstanceRef.current.on('object:modified', handleSelection);
-        return () => {
-          canvasInstanceRef.current?.dispose();
+    ({ onSave, onExit, logos, myUploads, onOwnUploadDelete }: Props, ref) => {
+        const canvasInstanceRef = useCanvasContext();
+        const [, setSelectedSection] = useAtom(handleSetSelectedSectionAtom);
+        const [, setSelectedItemType] = useAtom(handleSetSelectedItemTypeAtom);
+        const setSectionAndItemType = (
+            section: Exclude<ToolbarsSections, 'canvas'>
+        ) => {
+            setSelectedSection(section);
+            setSelectedItemType(section);
         };
-      }
-    }, []);
+        const [, setPositionThreePointsMenu] = useAtom(
+            handleSetThreePointsMenuPosition
+        );
+        const [, setTemplateUploads] = useAtom(handleSetTemplateUploadsAtom);
+        const resizerRef = useRef<ExposedMehtods | null>(null);
 
-    useEffect(() => {
-      window.addEventListener('keydown', handleKeyDown);
-      return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
+        useImperativeHandle(ref, () => {
+            return {
+                loadFromJSON(loadedCanvas: SaveObject) {
+                    if (!canvasInstanceRef.current)
+                        throw Error(
+                            'You must wait for canvas to be initalized'
+                        );
 
-    function handleMouseDown(e: fabric.IEvent<Event>) {
-      if (!e.target || !e.target?.type) {
-        setSelectedSection('');
-        setSelectedItemType('canvas');
-        return;
-      }
-      const { type } = e.target;
-      if (type === 'i-text') {
-        setSectionAndItemType('text');
-      } else if (elementSectionTypes.includes(type)) {
-        setSectionAndItemType('elements');
-      } else if (type === 'image') {
-        setSectionAndItemType('images');
-      }
-    }
+                    const { current: canvas } = canvasInstanceRef;
 
-    function handleSectionCleared() {
-      setPositionThreePointsMenu(null);
-      setSelectedItemType('');
-    }
+                    canvas.loadFromJSON(loadedCanvas, () => {
+                        canvasInstanceRef!.current!.renderAll.bind(canvas);
+                        canvas.setWidth(loadedCanvas.width);
+                        canvas.setHeight(loadedCanvas.height);
+                        resizerRef.current?.setInitialSize({
+                            height: loadedCanvas.height,
+                            width: loadedCanvas.width,
+                        });
+                        const templateUploads = loadedCanvas.objects.reduce<
+                            string[]
+                        >((arr, obj) => {
+                            if (
+                                'type' in obj &&
+                                'src' in obj &&
+                                typeof obj.src === 'string'
+                            ) {
+                                if (obj.type === 'image') {
+                                    arr.push(obj.src);
+                                }
+                            }
+                            return arr;
+                        }, []);
+                        setTemplateUploads(templateUploads);
+                    });
+                },
+                isCanvasInitialized() {
+                    return !!canvasInstanceRef.current;
+                },
+            };
+        });
 
-    function handleSelection() {
-      setPositionThreePointsMenu(null);
-    }
+        useEffect(() => {
+            if (canvasInstanceRef.current) {
+                canvasInstanceRef.current.on('mouse:down', handleMouseDown);
+                canvasInstanceRef.current.on(
+                    'selection:cleared',
+                    handleSectionCleared
+                );
+                canvasInstanceRef.current.on(
+                    'selection:created',
+                    handleSelection
+                );
+                canvasInstanceRef.current.on(
+                    'selection:updated',
+                    handleSelection
+                );
+                canvasInstanceRef.current.on(
+                    'object:modified',
+                    handleSelection
+                );
+                return () => {
+                    canvasInstanceRef.current?.dispose();
+                };
+            }
+        }, []);
 
-    function handleKeyDown(e: KeyboardEvent) {
-      if (!canvasInstanceRef.current) return;
-      if (
-        (e.ctrlKey && e.key === 'z' && e.altKey) ||
-        (e.ctrlKey && e.key === 'y')
-      ) {
-        // Ctrl+Z+Alt or Ctrl+Y  for redo
-        e.preventDefault();
-        (
-          canvasInstanceRef.current as { redo: Function } & fabric.Canvas
-        ).redo();
-      } else if (
-        e.ctrlKey &&
-        e.key === 'z' &&
-        (canvasInstanceRef.current as any).historyUndo.length > 0
-      ) {
-        // Ctrl+Z for undo
-        e.preventDefault();
-        (
-          canvasInstanceRef.current as { undo: Function } & fabric.Canvas
-        ).undo();
-      } else if (e.key === 'Backspace' || e.key === 'Delete') {
-        // Backspace or Delete for delete
-        const activeObject = canvasInstanceRef.current.getActiveObject();
-        if (activeObject) {
-          console.log(activeObject);
-          e.preventDefault();
-          canvasInstanceRef.current.remove(activeObject);
+        useEffect(() => {
+            window.addEventListener('keydown', handleKeyDown);
+            return () => window.removeEventListener('keydown', handleKeyDown);
+        }, []);
+
+        function handleMouseDown(e: fabric.IEvent<Event>) {
+            if (!e.target || !e.target?.type) {
+                setSelectedSection('');
+                setSelectedItemType('canvas');
+                return;
+            }
+            const { type } = e.target;
+            if (type === 'i-text') {
+                setSectionAndItemType('text');
+            } else if (elementSectionTypes.includes(type)) {
+                setSectionAndItemType('elements');
+            } else if (type === 'image') {
+                setSectionAndItemType('images');
+            }
         }
-      }
-    }
 
-    return (
-      <Editor
-        ActionsBarChildren={
-          <ActionsBar
-            onExit={onExit}
-            onSave={onSave}
-          />
+        function handleSectionCleared() {
+            setPositionThreePointsMenu(null);
+            setSelectedItemType('');
         }
-        Sidebar={<Sidebar />}
-        SidemenuChildren={
-          <Sidemenu
-            onOwnUploadDelete={onOwnUploadDelete}
-            logos={logos}
-            myUploads={myUploads}
-          />
+
+        function handleSelection() {
+            setPositionThreePointsMenu(null);
         }
-        ToolsBarChildren={<Toolbar />}
-      >
-        <div style={{ height: '100%' }}>
-          <Canvas />
-          <Resizer ref={resizerRef} />
-        </div>
-      </Editor>
-    );
-  }
+
+        function handleKeyDown(e: KeyboardEvent) {
+            if (!canvasInstanceRef.current) return;
+            if (
+                (e.ctrlKey && e.key === 'z' && e.altKey) ||
+                (e.ctrlKey && e.key === 'y')
+            ) {
+                // Ctrl+Z+Alt or Ctrl+Y  for redo
+                e.preventDefault();
+                (
+                    canvasInstanceRef.current as {
+                        redo: Function;
+                    } & fabric.Canvas
+                ).redo();
+            } else if (
+                e.ctrlKey &&
+                e.key === 'z' &&
+                (canvasInstanceRef.current as any).historyUndo.length > 0
+            ) {
+                // Ctrl+Z for undo
+                e.preventDefault();
+                (
+                    canvasInstanceRef.current as {
+                        undo: Function;
+                    } & fabric.Canvas
+                ).undo();
+            } else if (e.key === 'Backspace' || e.key === 'Delete') {
+                // Backspace or Delete for delete
+                const activeObject =
+                    canvasInstanceRef.current.getActiveObject();
+                if (activeObject) {
+                    console.log(activeObject);
+                    e.preventDefault();
+                    canvasInstanceRef.current.remove(activeObject);
+                }
+            }
+        }
+
+        return (
+            <Editor
+                ActionsBarChildren={
+                    <ActionsBar
+                        onExit={onExit}
+                        onSave={onSave}
+                    />
+                }
+                Sidebar={<Sidebar />}
+                SidemenuChildren={
+                    <Sidemenu
+                        onOwnUploadDelete={onOwnUploadDelete}
+                        logos={logos}
+                        myUploads={myUploads}
+                    />
+                }
+                ToolsBarChildren={<Toolbar />}
+            >
+                <div style={{ height: '100%' }}>
+                    <Canvas />
+                    <Resizer ref={resizerRef} />
+                </div>
+            </Editor>
+        );
+    }
 );
