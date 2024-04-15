@@ -18,10 +18,9 @@ import {
     handleSetTemplateUploadsAtom,
     handleSetThreePointsMenuPosition,
 } from './canvas-context/atoms/atoms';
-import { OwnUpload } from './components/side-menus/uploads-side-menu';
 
 fabric.Object.prototype.transparentCorners = false;
-fabric.Object.prototype.cornerColor = '#00b27a';
+fabric.Object.prototype.cornerColor = '#0072FF';
 fabric.Object.prototype.cornerStyle = 'circle';
 fabric.Object.NUM_FRACTION_DIGITS = 8;
 
@@ -173,6 +172,7 @@ export const GraphicEditor = forwardRef(
                 // Backspace or Delete for delete
                 const activeObject =
                     canvasInstanceRef.current.getActiveObject();
+                // @ts-expect-error
                 if (activeObject.type === 'i-text' && activeObject.isEditing) {
                     return;
                 }

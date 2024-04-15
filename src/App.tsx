@@ -6,7 +6,10 @@ function App() {
             <GraphicEditorWithContext
                 onExit={() => null}
                 onSave={(json) => {
-                    const url = json.toDataURL({ format: 'jpg', quality: 0.8 });
+                    const url = json.toDataURL({
+                        format: 'jpg',
+                        quality: 1,
+                    });
                     const a = document.getElementById('download-button');
                     a?.setAttribute('href', url);
                     a?.click();
